@@ -7,3 +7,4 @@ Current available commands:
 `boat`
 `subamarine`
 `portscan`
+`socialize`
