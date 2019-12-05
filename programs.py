@@ -10,9 +10,15 @@ def request(url):
 
 
 def port_scanner(self):
+    '''Port Scanner'''
     import socket
+    from functools import partial
+    from multiprocessing import Pool
+    from multiprocessing.pool import ThreadPool
+    from errno import ECONNREFUSED
     from datetime import datetime
 
+    NUM_CORES = 2 #TODO: Add multiprocessing
     t1 = datetime.now()
     if len(self) != 1:
         return 0
@@ -43,6 +49,7 @@ def port_scanner(self):
 
 
 def submarine(self):
+    '''Subdomain BruteForcer'''
     with open('./src/subdomain.txt', 'r') as f:
         reader = f.readlines()
         try:
@@ -55,6 +62,7 @@ def submarine(self):
             return 0
 
 def boat(self):
+    '''Directory BruteForcer'''
     found = []
     with open('./src/dirb.txt', 'r') as f:
         reader = f.readlines()
@@ -73,3 +81,48 @@ def boat(self):
             # TODO: add multi-threading
         except:
             return 0
+
+def social(self):
+    '''IP Scanner'''
+    import socket
+    from datetime import datetime
+
+
+    def get_ip_address():
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        return s.getsockname()
+
+    def ping(host):
+        try:
+
+            if socket.gethostbyaddr(host):
+                return True
+            else:
+                return False
+
+        except:
+            return False
+
+    t1 = datetime.now()
+    if len(self) != 0:
+        return 0
+    else:
+        print(f'Hello {socket.gethostname()}, let\'s find your neighbours!')
+        try:
+            ip = get_ip_address()[0]
+            for i in range(0, 255):
+                try:
+                    check = '.'.join(ip.split('.')[:-1]) + f'.{i}'
+                    if ping(check):
+                        print(f'[+] Hostname: {socket.gethostbyaddr(check)[0]}, IP: {check}')
+
+                except Exception:
+                    pass
+            t2 = datetime.now()
+            total = t2 - t1
+
+            print(f'Scan completed in: {total}')
+            
+        except Exception as err:
+            print(err)

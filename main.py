@@ -2,8 +2,7 @@ import os
 import sys
 import re
 import subprocess
-
-from programs import port_scanner, submarine, boat
+from programs import port_scanner, submarine, boat, social
 
 
 class Lead:
@@ -14,7 +13,7 @@ class Lead:
         self.arg = arg
 
     def deliverance(self, function_to_call):
-        subprocess.call('clear', shell=True)
+        subprocess.call('cls', shell=True)
         function_to_call(self.split(' ')[1:])
         command = input()
         Lead.main(command)
@@ -27,6 +26,8 @@ class Lead:
                 Lead.deliverance(self, submarine)
             elif 'boat' in self:
                 Lead.deliverance(self, boat)
+            elif 'socialize' in self:
+                Lead.deliverance(self, social)
         elif self in call_for_help:
             for count, i in enumerate(programs):
                 print(f'[*] {i} Usage : {i} {usage[count]}')
@@ -36,8 +37,8 @@ class Lead:
 
 if __name__ == '__main__':
     call_for_help = ['help', 'h', '-h', '--help', 'man', '/?']
-    programs = ['cspider', 'portscan', 'urlfind', 'brutedog', 'gang', 'submarine', 'boat']
-    usage = ['url', 'ip', 'url', 'ip port username password.list', 'ip port', 'url', 'url']
+    programs = ['cspider', 'portscan', 'urlfind', 'brutedog', 'gang', 'submarine', 'boat', 'socialize']
+    usage = ['url', 'ip', 'url', 'ip port username password.list', 'ip port', 'url', 'url', '']
     nfo = """
            )
        ____(_
